@@ -49,12 +49,51 @@
       border-radius: 0 0 10px 10px;
       box-shadow: var(--box-shadow);
     }
-    h1 { font-size: 2.5em; margin: 0; }
-    h2 {
+    header h1 { font-size: 2.5em; margin: 0; }
+    header p { margin: 5px 0 0; }
+    
+    /* Navigation & Social Media */
+    nav {
+      margin: 10px 0;
+    }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+    .nav-menu li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1em;
+    }
+    .nav-menu li a:hover {
+      text-decoration: underline;
+    }
+    .social-icons {
+      margin-top: 10px;
+    }
+    .social-icons a {
+      color: white;
+      margin: 0 5px;
+      font-size: 1.5em;
+    }
+    
+    /* Guidelines / Community Section */
+    #guidelines {
+      background: white;
+      padding: 20px;
+      margin: 30px auto;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow);
+    }
+    #guidelines h2 {
       font-size: 1.8em;
       border-bottom: 2px solid var(--primary-color);
       padding-bottom: 10px;
-      margin-top: 40px;
+      margin-top: 0;
     }
     
     /* Filters: Only Location and Time Period */
@@ -109,7 +148,7 @@
     .stat-card h3 { margin-top: 0; color: var(--primary-color); font-size: 1em; }
     .stat-card .value { font-size: 2em; font-weight: bold; margin: 10px 0; }
     
-    /* Only one chart: Payment Timeliness Pie Chart */
+    /* Chart: Payment Timeliness Pie Chart */
     .charts-container { display: flex; justify-content: center; margin-bottom: 30px; }
     .chart-box {
       background: white;
@@ -161,7 +200,7 @@
     /* Small button for actions */
     .btn-sm { padding: 4px 8px; font-size: 0.8em; }
     
-    /* Modals (Redirect only) */
+    /* Modals (Redirect or Info) */
     .modal {
       display: none;
       position: fixed;
@@ -207,6 +246,15 @@
       border-radius: 10px 10px 0 0;
       box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
     }
+    .footer-links {
+      margin-top: 10px;
+    }
+    .footer-links a {
+      color: white;
+      margin: 0 8px;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
     
     /* Intersection Observer fade-in */
     .chart-box, .table-container, .filter-container { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
@@ -214,12 +262,33 @@
   </style>
 </head>
 <body>
-  <header class="animate__animated animate__fadeInDown">
+  <header class="animate__animated animate__fadeInDown" id="home">
     <div class="container">
       <h1>Artist Payment Watch</h1>
       <p>Explore aggregated payment reports while protecting anonymity.</p>
+      <!-- Navigation Menu -->
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#submitModal" onclick="document.getElementById('submitModal').style.display='flex';">Submit Report</a></li>
+          <li><a href="https://discord.gg/artistpaymentwatch" target="_blank">Forum</a></li>
+          <li><a href="#feedbackModal" onclick="document.getElementById('feedbackModal').style.display='flex';">Feedback</a></li>
+        </ul>
+      </nav>
+      <!-- Social Media Icons -->
+      <div class="social-icons">
+        <a href="https://instagram.com/artistpaymentwatch" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://twitter.com/artistpaymentwatch" target="_blank"><i class="fab fa-twitter"></i></a>
+      </div>
     </div>
   </header>
+
+  <!-- Guidelines & Community Section -->
+  <section id="guidelines" class="container">
+    <h2>Submission Guidelines & Community</h2>
+    <p>Please ensure your reports are factual, respectful, and detailed. Include as much context as possible. All submissions are moderated to maintain accuracy and fairness.</p>
+    <p>Join our community forum on <a href="https://discord.gg/artistpaymentwatch" target="_blank">Discord</a> to share your experiences and insights.</p>
+  </section>
 
   <div class="container">
     <!-- Filters: Only Location and Time Period -->
@@ -261,6 +330,11 @@
       <div class="stat-card animate__animated animate__fadeIn" style="animation-delay: 0.3s">
         <h3>Disputed Reports</h3>
         <div class="value" id="disputeRate">0</div>
+      </div>
+      <!-- Placeholder for Gamification / Leaderboard -->
+      <div class="stat-card animate__animated animate__fadeIn" style="animation-delay: 0.4s">
+        <h3>Top Contributor</h3>
+        <div class="value" id="topContributor">Coming Soon</div>
       </div>
     </div>
 
@@ -309,7 +383,13 @@
     <div class="modal-content">
       <span class="close-modal" id="closeSubmitModal">&times;</span>
       <h2>Submit New Report</h2>
-      <p>To submit your report with all details, please visit our official report form.</p>
+      <p>Please follow these guidelines when submitting your report:</p>
+      <ul>
+        <li>Provide factual and detailed information.</li>
+        <li>Remain respectful and avoid personal attacks.</li>
+        <li>Your submission will be moderated for accuracy.</li>
+      </ul>
+      <p>To submit your full report with all required details, please visit our official report form.</p>
       <div class="form-actions">
         <button class="btn btn-primary" id="redirectReport">Go to Report Form</button>
       </div>
@@ -327,13 +407,36 @@
       </div>
     </div>
   </div>
+  
+  <!-- Feedback Modal -->
+  <div class="modal" id="feedbackModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeFeedbackModal">&times;</span>
+      <h2>Feedback</h2>
+      <p>We value your feedback! To share suggestions or report issues, please visit our official feedback form.</p>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="redirectFeedback">Go to Feedback Form</button>
+      </div>
+    </div>
+  </div>
 
   <footer>
     <p>&copy; 2025 Artist Payment Watch. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="https://instagram.com/artistpaymentwatch" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://twitter.com/artistpaymentwatch" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://discord.gg/artistpaymentwatch" target="_blank"><i class="fab fa-discord"></i></a>
+      <a href="#feedbackModal" onclick="document.getElementById('feedbackModal').style.display='flex';"><i class="fas fa-comment-dots"></i> Feedback</a>
+    </div>
   </footer>
 
+  <!-- Google Analytics (Placeholder) -->
+  <!-- <script>
+    // Insert your Google Analytics tracking code here.
+  </script> -->
+
   <script>
-    // CSV URL from your newly published Artist Payment Responses spreadsheet
+    // CSV URL from your published Artist Payment Responses spreadsheet
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTCxiwvO-yVXux43OupB96fr14n5B98t8cZs8Kkg1ThS-rTvtA5tCvPAERCir_5D6wcg0NPPBcv3Q0x/pub?output=csv";
     let rawData = [];
     let filteredData = [];
@@ -470,11 +573,12 @@
       document.getElementById("onTimeRate").textContent = onTimeRate;
       document.getElementById("verifiedRate").textContent = verifiedCount;
       document.getElementById("disputeRate").textContent = disputedCount;
+      // Placeholder: Top Contributor remains "Coming Soon"
     }
     
     /* --- Modal & Redirect Handling --- */
     function initModals() {
-      // Quick Report Modal (Redirect)
+      // Submit Report Modal
       const submitModal = document.getElementById("submitModal");
       const openSubmitFormBtn = document.getElementById("openSubmitForm");
       const closeSubmitModalBtn = document.getElementById("closeSubmitModal");
@@ -490,7 +594,7 @@
         window.location.href = "https://forms.gle/zzB322HTE7GBQTWD6"; // Official report form URL
       });
       
-      // Dispute Modal (Redirect)
+      // Dispute Modal
       const disputeModal = document.getElementById("disputeModal");
       const closeDisputeModalBtn = document.getElementById("closeDisputeModal");
       document.addEventListener("click", function(e) {
@@ -503,6 +607,18 @@
       });
       document.getElementById("redirectDispute").addEventListener("click", () => {
         window.location.href = "https://forms.gle/Ck678YwVTCN34X5J8"; // Official dispute form URL
+      });
+    }
+    
+    function initFeedbackModal() {
+      // Feedback Modal
+      const feedbackModal = document.getElementById("feedbackModal");
+      const closeFeedbackModalBtn = document.getElementById("closeFeedbackModal");
+      closeFeedbackModalBtn.addEventListener("click", () => {
+        feedbackModal.style.display = "none";
+      });
+      document.getElementById("redirectFeedback").addEventListener("click", () => {
+        window.location.href = "https://forms.gle/YourFeedbackFormURL"; // Update with your feedback form URL
       });
     }
     
@@ -559,6 +675,7 @@
     function init() {
       fetchData();
       initModals();
+      initFeedbackModal();
       initFilters();
       initDownload();
       observeElements();
